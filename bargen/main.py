@@ -11,3 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from .scripts.cli import cli
+
+
+def run_cli():
+    print('Running function run_cli from main.py')
+    cli()

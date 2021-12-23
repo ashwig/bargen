@@ -11,3 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import click
+
+from ..classes.BargenInstance import BargenInstance
+
+
+@click.command()
+@click.option('-a', '--author-name', 'authorname')
+def cli(authorname):
+    sourceconfig = BargenInstance()
+    sourceconfig.authorname = authorname
+    """Example Script"""
+    click.echo('Running CLI from scripts/cli.py')
+    click.echo('Using config:')
+    click.echo('Author Name: ' + sourceconfig.authorname)
