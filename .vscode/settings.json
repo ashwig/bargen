@@ -14,5 +14,15 @@
     "python.pythonPath": "/Users/ashwig-personal/opt/anaconda3/envs/bargen_env/bin/python",
     "python.formatting.provider": "yapf",
     "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    /* General Editor */
+    // Licenser
+    "licenser.author": "Ash Hellwig",
+    "licenser.license": "AL2",
+    "licenser.projectName": "bargen",
+    "licenser.useSPDXLicenseFormat": false,
+    // Files
+    "files.associations": {
+        "LICENSE": "plaintext"
+    }
 }
