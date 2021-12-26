@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .main import run_cli
+from .main import cli
 
 if __name__ == '__main__':
     print('Running from __init__.py since __name__ == __main__')
-    run_cli()
+    cli()

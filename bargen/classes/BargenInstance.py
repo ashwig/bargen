@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# from bs4 import BeautifulSoup
+# import requests
+
 
 class BargenInstance(object):
     """Configuration for source of what is used to generate the lyrics.
@@ -21,7 +24,7 @@ class BargenInstance(object):
         required to generate the lyrics.
     """
     def __init__(self):
-        self._artistname = None
+        pass
 
     @property
     def artistname(self):
@@ -40,5 +43,5 @@ class BargenInstance(object):
     def artistname(self):
         del self._artistname
 
-    def printInfo(self):
-        print('Using artist name: ' + self.artistname)
+    def printconfig(self):
+        print('Artist Name: ' + self._artistname)
