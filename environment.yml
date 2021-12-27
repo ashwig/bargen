@@ -1,0 +1,13 @@
+name: bargen_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - click
+  - tensorflow
+  - scikit-learn
+  - yapf
+  - flake8
+  - beautifulsoup4
+prefix: /home/ahellwig/anaconda3/envs/bargen_env

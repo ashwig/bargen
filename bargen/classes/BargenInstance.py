@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# from bs4 import BeautifulSoup
-# import requests
+from bs4 import BeautifulSoup
+import requests
 
 
 class BargenInstance(object):
@@ -23,8 +23,13 @@ class BargenInstance(object):
         object (dict): Configuration object consisting of information
         required to generate the lyrics.
     """
-    def __init__(self):
-        pass
+    def __init__(self, artistname):
+        self._artist = artistname.replace(' ', '-')
+        self._url_artist = 'https://genius.com/artists/' + self._artist.replace(
+            ' ', '-')
+        self._html_artist = self.set_html_artist()
+        self._url_songs = self.set_songs_url()
+        self._html_songs = self.set_songs_html()
 
     @property
     def artistname(self):
@@ -33,15 +38,75 @@ class BargenInstance(object):
         Returns:
             str: Name of the artist to use as model for lyric generation.
         """
-        return self._artistname
+        return self._artist
 
-    @artistname.setter
-    def artistname(self, value):
-        self._artistname = value
+    @property
+    def url_artist(self):
+        """Artist URL to scrape from lyric database.
 
-    @artistname.deleter
-    def artistname(self):
-        del self._artistname
+        Returns:
+            str: URl of the artist to use as model for lyric generation.
+        """
+        return self._url_artist
+
+    def set_html_artist(self):
+        # ---- Get List of Songs from Artist Page ----
+        artistpage_page = requests.get(self._url_artist)
+        artistpage_soup = BeautifulSoup(artistpage_page.content, 'html.parser')
+        artistpage_results = artistpage_soup.find_all(
+            'div', class_='mini_card_grid-song')
+
+        return artistpage_results
+
+    def set_songs_url(self):
+        artistpage_songcard = []
+        for card in self._html_artist:
+            for link in card.find_all('a'):
+                artistpage_songcard.append(link['href'])
+
+        return artistpage_songcard
+
+    def set_songs_html(self):
+        songpage_lyrics = []
+        for song in self._url_songs:
+            songlink_page = requests.get(song)
+            songlink_soup = BeautifulSoup(songlink_page.content, 'html.parser')
+            songlink_results = songlink_soup.find_all('div',
+                                                      class_='lyrics-root')
+            for i in songlink_results:
+                songpage_lyrics.append(i)
+
+        return songpage_lyrics
 
     def printconfig(self):
-        print('Artist Name: ' + self._artistname)
+        print('==============================================')
+
+        # ---- Log Artist Name ----
+        # print('----------------------------------------------')
+        # print('Artist Name:')
+        # print('----------------------------------------------')
+        # print(self._artist.replace('-', ' '))
+        # print('----------------------------------------------')
+
+        # ---- Log Artist URL ----
+        # print('----------------------------------------------')
+        # print('Artist URL:')
+        # print('----------------------------------------------')
+        # print(self._url_artist)
+        # print('----------------------------------------------')
+
+        # ---- Log Artist HTML ----
+        # print('----------------------------------------------')
+        # print('Artist Page HTML:')
+        # print('----------------------------------------------')
+        # print(self._html_artist)
+        # print('----------------------------------------------')
+
+        # ---- Log Song Links ----
+        print('----------------------------------------------')
+        print('Song Links:')
+        print('----------------------------------------------')
+        for i in self._url_songs:
+            print(i)
+        print('----------------------------------------------')
+        print('==============================================')
